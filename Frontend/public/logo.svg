@@ -1,0 +1,7 @@
+<svg width="200" height="200" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <rect width="1024" height="1024" rx="200" fill="#06B6D4"/>
+  <path d="M300 320h160v160H300V320zm0 224h160v160H300V544zm224-224h160v160H524V320zm0 224h160v160H524V544z" fill="white"/>
+  <text x="480" y="860" text-anchor="middle" font-family="Arial, sans-serif" font-size="200" fill="white" font-weight="bold">
+    PM
+  </text>
+</svg>

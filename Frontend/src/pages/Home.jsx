@@ -1,0 +1,30 @@
+import React from "react";
+import HeroSection from "../components/HeroSection";
+import FeaturesSection from "../components/FeaturesSection";
+import SampleEmail from "../components/SampleEmail";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import Sample from "./Sample";
+import Features from "../components/Feature";
+import MockInterviewSession from "./interview/Prepare";
+import MockInterviewForm from "./interview/MockInterview";
+
+function Home() {
+  return (
+    <div>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-br max-w-full   bg-gray-900 p-0 sm:px-6 py-10 flex flex-col items-center justify-start font-sans">
+        <HeroSection />
+       {/* <MockInterviewForm/> */}
+       
+        
+        <Features />
+
+        <SampleEmail />
+        <Footer />
+      </div>
+    </div>
+  );
+}
+
+export default Home;
