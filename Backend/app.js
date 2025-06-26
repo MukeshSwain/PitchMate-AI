@@ -16,10 +16,16 @@ connectDB();
 const app = express();
 
 app.use(cookieParser())
-app.use(cors({
+app.use(
+  cors({
     credentials: true,
-    origin: "http://localhost:5173"
-}));
+    origin: [
+      "http://localhost:5173",
+      "https://pitch-mate-ai-frontend.vercel.app",
+    ],
+  })
+);
+  
 app.use(express.json());
 
 app.get("/", (req, res) => {
