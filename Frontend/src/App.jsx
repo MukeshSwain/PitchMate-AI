@@ -2,21 +2,20 @@ import React from 'react'
 import {Toaster} from 'react-hot-toast'
 
 import './App.css'
-import Landing from './pages/Landing'
-import HeroSection from './components/HeroSection'
+
 import FeaturesSection from './components/FeaturesSection'
 import Home from './pages/Home'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
+
 import Login from './pages/Login'
 import SignupPage from './pages/Signup'
 import { Route,Routes } from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
 import Sample from './pages/Sample'
 import ContactPage from './pages/Contact'
-import { ProtectedRoute, PublicRoute } from './utils/protectedRoute'
+import { ProtectedRoute } from './utils/protectedRoute.jsx'
+import { PublicRoute } from './utils/PublicRoute.jsx'
 import GeneratePage from './pages/GenerateEmail'
-import EmailHistoryPage from './pages/EmailHistory'
+
 import ResumeChecker from './pages/ResumeCheck'
 import HistoryPage from './pages/History'
 
