@@ -9,47 +9,48 @@ import User from "../models/userModel.js";
 
 export const analyzeUploadedResume = async (req, res) => {
   try {
+    
+    
     const file = req.file;
+    const jobTitle = req.body.jobTitle;
 
-    if (!file) {
+    if (!file || !jobTitle) {
       return res
         .status(400)
-        .json({ success: false, message: "No resume uploaded" });
+        .json({ success: false, message: "Resume and job title are required" });
     }
 
     const filePath = file.path;
     const fileName = file.originalname;
 
-    // Extract resume text
+    
+
+    // Extract resume text from uploaded file
     const resumeText = await extractTextFromFile(filePath, fileName);
 
-    // Upload resume to Cloudinary as raw file
-    const result = await cloudinary.uploader.upload(file.path, {
-      folder: "resume-uploads",
-      resource_type: "raw", // Important for PDFs and DOCX
-    });
+    // Analyze resume with AI
+    const aiResponse = await analyzeResume(resumeText, jobTitle);
+    const cleaned = aiResponse.replace(/```json|```/g, "").trim();
 
-    // Clean up uploaded temp file
+    let parsed;
+    try {
+      parsed = JSON.parse(cleaned);
+    } catch (parseError) {
+      console.error("❌ Failed to parse AI response:", cleaned);
+      return res
+        .status(500)
+        .json({ success: false, message: "AI response parsing failed" });
+    }
+
+    // Delete the uploaded file after processing
     fs.unlinkSync(filePath);
 
-    // Analyze resume with AI
-    const aiResponse = await analyzeResume(resumeText, req.body.jobTitle);
-    const cleaned = aiResponse.replace(/```json|```/g, "").trim();
-    const parsed = JSON.parse(cleaned);
-    
-    // Construct correct Cloudinary raw URL manually
-    const url = result.secure_url
-
-
-    
-    
-    // Save resume and analysis to database
+    // Save analysis to DB
     await Resume.create({
       user: req.userId,
-      jobTitle: req.body.jobTitle,
-      fileUrl: url,
-      fileName: fileName,
-      resumeText: resumeText,
+      jobTitle,
+      fileName,
+      resumeText,
       score: parsed.score,
       keySkills: parsed.key_skills,
       missingSkills: parsed.missing_skills,
@@ -58,60 +59,32 @@ export const analyzeUploadedResume = async (req, res) => {
       suggestions: parsed.suggestions,
       summary: parsed.summary,
     });
+
+    // Get user email to send results
     const user = await User.findById(req.userId);
-    await sendMail({
-      to: user.email,
-      subject: `Your Resume Analysis for "${req.body.jobTitle}" is Ready!`,
-      html: `
-        <div style="font-family: Arial, sans-serif; color: #111827; line-height: 1.6;">
-          <h2 style="color: #2563eb;">Your Resume Analysis for "${
-            req.body.jobTitle
-          }"</h2>
-          
-          <p>We've analyzed your resume for the <strong>${
-            req.body.jobTitle
-          }</strong> role. Here's what we found:</p>
-          
-          <ul style="background-color: #f9fafb; padding: 1rem; border-radius: 8px;">
-            <li><strong>Score:</strong> ${parsed.score}</li>
-            <li><strong>Key Skills:</strong> ${parsed.key_skills.join(
-              ", "
-            )}</li>
-            <li><strong>Missing Skills:</strong> ${parsed.missing_skills.join(
-              ", "
-            )}</li>
-          </ul>
-    
-          <div style="margin-top: 1rem;">
-            <p><strong>Strengths:</strong></p>
-            <ul>
-              ${parsed.strengths.map((skill) => `<li>${skill}</li>`).join("")}
-            </ul>
-          </div>
-    
-          <p style="margin-top: 2rem;">
-            Want to analyze another resume? <a href="${
-              process.env.CLIENT_URL
-            }/resume-checker" style="color: #2563eb; text-decoration: none;">Try again</a>
-          </p>
-    
-          <p>Thanks,<br/>The PitchMatch AI Team</p>
-        </div>
-      `,
-    });
-    
-    res.status(200).json({
-      success: true,
-      analysis: parsed,
-    });
+    if (user?.email) {
+      await sendMail({
+        to: user.email,
+        subject: `Your Resume Analysis for "${jobTitle}" is Ready!`,
+        html: `
+          <h2>Your Resume Analysis for "${jobTitle}"</h2>
+          <p><strong>Score:</strong> ${parsed.score}</p>
+          <p><strong>Key Skills:</strong> ${parsed.key_skills.join(", ")}</p>
+          <p><strong>Missing Skills:</strong> ${parsed.missing_skills.join(
+            ", "
+          )}</p>
+        `,
+      });
+    }
+
+    res.status(200).json({ success: true, analysis: parsed });
   } catch (error) {
-    console.log(error.message);
+    console.error("❌ Error analyzing resume:", error.message);
     res
       .status(500)
       .json({ success: false, message: "Failed to analyze resume" });
   }
 };
-
 
 export const getHistory = async (req, res) => {
   try {
