@@ -59,13 +59,13 @@ PitchMate-AI/
 │   │   └── App.jsx
 │   └── tailwind.config.js
 ```
-#⚙️ Getting Started
-##📦 Clone the Repository
+# ⚙️ Getting Started
+## 📦 Clone the Repository
 ```base
 git clone https://github.com/MukeshSwain/PitchMate-AI.git
 cd PitchMate-AI
 ```
-##🔧 Setup the Backend
+## 🔧 Setup the Backend
 ```base
 cd backend
 npm install
@@ -90,23 +90,23 @@ EMAIL_PASS=your_email_app_password
 CLIENT_URL=http://localhost:5173 
 
 ```
-##Start the backend
+## Start the backend
 ```base
 npm run dev
 ```
 
-##💻 Frontend Setup
+## 💻 Frontend Setup
 ```base
 cd ../frontend
 npm install
 npm run dev
 
 ```
-##📄 License
+## 📄 License
 ```base
     This project is licensed under the ISC License.
 ```
-##🙋‍♂️ Author
+## 🙋‍♂️ Author
 ```base
 Mukesh Swain
 Full Stack Developer | MERN Stack 
