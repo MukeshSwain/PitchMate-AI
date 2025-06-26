@@ -14,7 +14,7 @@ Generate professional emails by specifying:
 
 ### 📄 Resume Analyzer
 Upload your resume (PDF) and receive:
-- An **AI-generated score** based on job fit
+- An **AI-generated score** based on job title provided
 - **Key strengths** extracted from your resume
 - **Missing skills** for the selected job title
 - **Actionable suggestions** to improve your resume
@@ -59,6 +59,7 @@ PitchMate-AI/
 │   │   └── App.jsx
 │   └── tailwind.config.js
 ```
+#⚙️ Getting Started
 ##📦 Clone the Repository
 ```base
 git clone https://github.com/MukeshSwain/PitchMate-AI.git
@@ -70,7 +71,7 @@ cd backend
 npm install
 cp .env.example .env
 ```
-## .env
+## Update your .env file:
 ```base
 MONGO_URI=mongodb+srv://mukeshswain2844:GWHbqJ7TlTvckxsd@cluster0.hpll6.mongodb.net/ptchmate_ai?retryWrites=true&w=majority&appName=Cluster0
 PORT=3000
@@ -86,8 +87,29 @@ CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 EMAIL_USER=mukeshswain2844@gmail.com
 EMAIL_PASS=your_email_app_password
 
-CLIENT_URL=http://localhost:5173
+CLIENT_URL=http://localhost:5173 
 
+```
+##Start the backend
+```base
+npm run dev
+```
+
+##💻 Frontend Setup
+```base
+cd ../frontend
+npm install
+npm run dev
+
+```
+##📄 License
+```base
+    This project is licensed under the ISC License.
+```
+##🙋‍♂️ Author
+```base
+Mukesh Swain
+Full Stack Developer | MERN Stack 
 ```
 
 
