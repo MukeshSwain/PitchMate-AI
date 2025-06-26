@@ -12,7 +12,7 @@ import { Route,Routes } from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
 import Sample from './pages/Sample'
 import ContactPage from './pages/Contact'
-import { ProtectedRoute } from './utils/protectedRoute'
+import { ProtectedRoute } from './utils/ProtectedRoute'
 import { PublicRoute } from './utils/PublicRoute'
 import GeneratePage from './pages/GenerateEmail'
 
