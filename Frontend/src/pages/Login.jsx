@@ -6,7 +6,10 @@ import toast from "react-hot-toast";
 import { useNavigate, Link } from "react-router-dom";
 import { setUser } from "../redux/authSlice";
 
-const API = import.meta.env.VITE_API_BASE_URL;
+
+import { endpoint } from "../endpoint.js";
+const API = endpoint;
+
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");

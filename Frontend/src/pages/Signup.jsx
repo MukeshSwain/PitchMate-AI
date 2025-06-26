@@ -6,8 +6,8 @@ import toast from "react-hot-toast";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const API = import.meta.env.VITE_API_BASE_URL;
-
+import { endpoint } from "../endpoint.js";
+const API = endpoint;
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: { duration: 0.6 } },

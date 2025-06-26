@@ -1,13 +1,11 @@
 import React from "react";
 import HeroSection from "../components/HeroSection";
-import FeaturesSection from "../components/FeaturesSection";
+
 import SampleEmail from "../components/SampleEmail";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import Sample from "./Sample";
 import Features from "../components/Feature";
-import MockInterviewSession from "./interview/Prepare";
-import MockInterviewForm from "./interview/MockInterview";
+
 
 function Home() {
   return (

@@ -6,8 +6,8 @@ import jsPDF from "jspdf";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-const API = import.meta.env.VITE_API_BASE_URL;
-
+import { endpoint } from "../endpoint.js";
+const API = endpoint;
 const tones = ["Formal", "Casual", "Persuasive"];
 
 const GeneratePage = () => {

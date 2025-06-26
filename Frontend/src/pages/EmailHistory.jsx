@@ -12,7 +12,8 @@ import {
 import toast from "react-hot-toast";
 import { Dialog } from "@headlessui/react";
 
-const API = import.meta.env.VITE_API_BASE_URL;
+import { endpoint } from "../endpoint.js";
+const API = endpoint;
 
 const EmailHistoryPage = () => {
   const [history, setHistory] = useState([]);

@@ -13,8 +13,11 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { setUser } from "../redux/authSlice";
+import { endpoint } from "../endpoint.js";
 
-const API = import.meta.env.VITE_API_BASE_URL;
+
+const API = endpoint;
+
 
 const Navbar = () => {
   const dispatch = useDispatch();

@@ -13,7 +13,8 @@ import axios from "axios";
 import jsPDF from "jspdf";
 import Navbar from "../components/Navbar";
 
-const API = import.meta.env.VITE_API_BASE_URL;
+import { endpoint } from "../endpoint.js";
+const API = endpoint;
 
 const tones = ["Formal", "Casual", "Persuasive"];
 

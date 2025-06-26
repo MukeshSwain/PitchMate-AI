@@ -19,7 +19,7 @@ import GeneratePage from './pages/GenerateEmail'
 import EmailHistoryPage from './pages/EmailHistory'
 import ResumeChecker from './pages/ResumeCheck'
 import HistoryPage from './pages/History'
-import MockInterviewSession from './pages/interview/Prepare'
+
 
 
 function App() {

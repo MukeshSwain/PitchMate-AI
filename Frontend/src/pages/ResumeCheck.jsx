@@ -6,8 +6,8 @@ import jsPDF from "jspdf";
 import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
 
-const API = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
-
+import { endpoint } from "../endpoint.js";
+const API = endpoint;
 const ResumeChecker = () => {
   const [file, setFile] = useState(null);
   const [jobTitle, setJobTitle] = useState("");

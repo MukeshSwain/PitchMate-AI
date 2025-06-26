@@ -4,7 +4,8 @@ import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import { Download, CalendarDays, Eye, ExternalLink } from "lucide-react";
 
-const API = import.meta.env.VITE_API_BASE_URL;
+import { endpoint } from "../endpoint.js";
+const API = endpoint;
 
 
 const ResumeHistoryPage = () => {

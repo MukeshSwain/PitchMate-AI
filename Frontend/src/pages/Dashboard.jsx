@@ -30,7 +30,8 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { setUser } from "../redux/authSlice";
 
-const API = import.meta.env.VITE_API_BASE_URL;
+import { endpoint } from "../endpoint.js";
+const API = endpoint;
 
 const Dashboard = () => {
   const user = useSelector((store) => store.auth.user);
