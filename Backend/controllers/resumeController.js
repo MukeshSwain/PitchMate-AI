@@ -9,44 +9,38 @@ import User from "../models/userModel.js";
 
 export const analyzeUploadedResume = async (req, res) => {
   try {
-    
-    
     const file = req.file;
     const jobTitle = req.body.jobTitle;
 
     if (!file || !jobTitle) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Resume and job title are required" });
+      return res.status(400).json({
+        success: false,
+        message: "Resume file and job title are required.",
+      });
     }
 
     const filePath = file.path;
     const fileName = file.originalname;
 
-    
-
-    // Extract resume text from uploaded file
     const resumeText = await extractTextFromFile(filePath, fileName);
-
-    // Analyze resume with AI
     const aiResponse = await analyzeResume(resumeText, jobTitle);
+
     const cleaned = aiResponse.replace(/```json|```/g, "").trim();
 
     let parsed;
     try {
       parsed = JSON.parse(cleaned);
-    } catch (parseError) {
-      console.error("❌ Failed to parse AI response:", cleaned);
+    } catch (err) {
+      console.error("❌ AI JSON Parse Error:", err, "\nResponse:", cleaned);
+      fs.existsSync(filePath) && fs.unlinkSync(filePath);
       return res
         .status(500)
-        .json({ success: false, message: "AI response parsing failed" });
+        .json({ success: false, message: "Invalid AI response format." });
     }
 
-    // Delete the uploaded file after processing
-    fs.unlinkSync(filePath);
+    fs.existsSync(filePath) && fs.unlinkSync(filePath); // Clean up file
 
-    // Save analysis to DB
-    await Resume.create({
+    const saved = await Resume.create({
       user: req.userId,
       jobTitle,
       fileName,
@@ -60,8 +54,8 @@ export const analyzeUploadedResume = async (req, res) => {
       summary: parsed.summary,
     });
 
-    // Get user email to send results
     const user = await User.findById(req.userId);
+
     if (user?.email) {
       await sendMail({
         to: user.email,
@@ -79,10 +73,11 @@ export const analyzeUploadedResume = async (req, res) => {
 
     res.status(200).json({ success: true, analysis: parsed });
   } catch (error) {
-    console.error("❌ Error analyzing resume:", error.message);
-    res
-      .status(500)
-      .json({ success: false, message: "Failed to analyze resume" });
+    console.error("❌ Resume Analysis Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error during resume analysis.",
+    });
   }
 };
 
