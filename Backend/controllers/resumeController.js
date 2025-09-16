@@ -10,6 +10,8 @@ import User from "../models/userModel.js";
 export const analyzeUploadedResume = async (req, res) => {
   try {
     const file = req.file;
+    console.log(file);
+    
     const jobTitle = req.body.jobTitle;
 
     if (!file || !jobTitle) {
